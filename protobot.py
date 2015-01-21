@@ -193,6 +193,8 @@ class ProtoBot(object):
 		self.terminate = True
 		time.sleep(3)
 
+
+
 default_messages = 'Das habe ich leider nicht verstanden.'
 
 answers = {}
@@ -205,8 +207,8 @@ email = sys.argv[2]
 password = sys.argv[3]
 
 
-carla = ProtonetServerConnection(server, email, password)
-bot = ProtoBot(carla, carla.username, answers, default_messages)
+serverConnection = ProtonetServerConnection(server, email, password)
+bot = ProtoBot(serverConnection, serverConnection.username, answers, default_messages)
 try:
 	while True:
 		time.sleep(1)
