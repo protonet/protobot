@@ -1,0 +1,53 @@
+Der Protobot loggt sich mit den angegebenen Benutzerdaten am Server ein 
+und antwortet dann auf Nachrichten mit vordefinierten Antworten oder 
+mit dem Rückgabewert einer Funktion.
+
+Beispiel zur Verwendung:
+------------------------
+
+	Benutzung:
+	----------
+		./protobot.py servername.protonet.info max.mustermann@musterserver.de 'benutzer_passwort'
+
+
+
+	Anpassung der Antworten:
+	------------------------
+		Angegeben als Python-Dictionary:
+
+		answers = {}
+		answers['Hallo'] = 'Hallo! Wie geht's'
+		answers['Tschüss'] = 'Auf Wiedersehen'
+
+
+
+	Definieren der Standard-Antwort:
+	--------------------------------
+		default_messages = 'Das habe ich leider nicht verstanden.'
+
+
+
+	Python-Funktion ausführen und Rückgabewert als Nachricht schicken:
+	------------------------------------------------------------------
+		Soll eine Funktion ausgeführt werden, muss diese in einem Tuple,
+		bestehend aus Funktion und Parameter übergeben werden.
+
+		answers = {}
+		answers['ifconfig'] = (os.popen, 'ifconfig')
+
+
+	Es können auch eigene Funktionen definiert werden:
+	--------------------------------------------------
+		def eigeneFunktion(parameter):
+			antwort = parameter
+
+			# Code hier einfügen
+
+			return str(antwort)
+
+		answers = {}
+		answers['mach was'] = (eigeneFunktion, 'Keine Lust!')
+
+
+Die API kann auch statt mit einem Passwort, auch mit einem Token verwendet werden.
+Dies ist jedoch in Version 1.2 noch nicht implementiert.

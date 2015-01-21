@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  protobot.py
+#  protobot.py [Version 1.2]
 #  
 #  Copyright 2015 Silvano Wegener [Protonet GmbH]
 
