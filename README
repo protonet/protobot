@@ -1,4 +1,4 @@
-Der Protobot loggt sich mit den angegebenen Benutzerdaten am Server ein 
+Der Protobot loggt sich mit den angegebenen Benutzerdaten am Protonet-Server ein 
 und antwortet dann auf Nachrichten mit vordefinierten Antworten oder 
 mit dem Rückgabewert einer Funktion.
 
@@ -13,17 +13,20 @@ Beispiel zur Verwendung:
 
 	Anpassung der Antworten:
 	------------------------
+		ACHTUNG: Nachrichten werden IMMER im Lowercase verarbeitet!
+		Deswegen müssen die Keys des Dictionary's auch Lowercase sein.
+		
 		Angegeben als Python-Dictionary:
 
 		answers = {}
-		answers['Hallo'] = 'Hallo! Wie geht's'
-		answers['Tschüss'] = 'Auf Wiedersehen'
+		answers['hallo'] = 'Hallo! Wie geht's'
+		answers['tschüss'] = 'Auf Wiedersehen'
 
 
 
 	Definieren der Standard-Antwort:
 	--------------------------------
-		default_messages = 'Das habe ich leider nicht verstanden.'
+		default_message = 'Das habe ich leider nicht verstanden.'
 
 
 

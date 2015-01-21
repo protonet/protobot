@@ -206,7 +206,7 @@ class ProtoBot(object):
 
 
 
-default_messages = 'Das habe ich leider nicht verstanden.'
+default_message = 'Das habe ich leider nicht verstanden.'
 
 answers = {}
 answers['ip?'] = (os.popen, 'ifconfig')  # (python funktion, parameter)
@@ -219,7 +219,7 @@ password = sys.argv[3]
 
 
 serverConnection = ProtonetServerConnection(server, email, password)
-bot = ProtoBot(serverConnection, serverConnection.username, answers, default_messages)
+bot = ProtoBot(serverConnection, serverConnection.username, answers, default_message)
 try:
 	while True:
 		time.sleep(1)
