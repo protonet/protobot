@@ -122,6 +122,11 @@ class ProtonetServerConnection(object):
 		data_json = json.dumps(data)
 		response = requests.put(self.url + 'private_chats/' + str(chat_id) + '/subscriptions/'+subscription_id , auth=self.auth, data=data_json, headers=headers)
 
+
+
+
+
+
 class ProtoBot(object):
 	def __init__(self, protonet_server, protonet_username, answers, default_msg='Das habe ich leider nicht verstanden.'):
 		self.answers = answers
@@ -134,29 +139,32 @@ class ProtoBot(object):
 	def robot_thread(self, value):
 		self.set_all_meeps_as_seen()
 		while not self.terminate:
-			for meep in self.get_new_meeps():
-				chat_id = meep['private_chat_id']
-				subscription_id = meep['subscription_id']
-				meep_no = meep['no']
-				sender = meep['sender']
-				message = meep['message'].lower()
-				
-				if sender == self.username:
+			try:
+				for meep in self.get_new_meeps():
+					chat_id = meep['private_chat_id']
+					subscription_id = meep['subscription_id']
+					meep_no = meep['no']
+					sender = meep['sender']
+					message = meep['message'].lower()
+					
+					if sender == self.username:
+						self.set_last_seen_meep(chat_id, subscription_id, meep_no)
+						continue
+
+					print sender + ": " + message
+					
+					try:
+						message = self.answers[message]
+						if 'tuple' in str(type(message)):
+							message = message[0](message[1]).read()
+					except KeyError:
+						message = self.default_msg
+
 					self.set_last_seen_meep(chat_id, subscription_id, meep_no)
-					continue
+					self.protonet_server.send_private_chat_meep(sender, message)
+			except:
+				pass
 
-				print sender + ": " + message
-				
-				try:
-					message = self.answers[message]
-					if 'tuple' in str(type(message)):
-						message = message[0](message[1]).read()
-				except KeyError:
-					message = self.default_msg
-
-				self.set_last_seen_meep(chat_id, subscription_id, meep_no)
-				self.protonet_server.send_private_chat_meep(sender, message)
-				
 			time.sleep(1)
 
 	def set_all_meeps_as_seen(self):
@@ -166,8 +174,11 @@ class ProtoBot(object):
 		for key in private_chats.keys():
 			subscription_id = private_chats[key]['subscription_id']
 			privat_chat_id = key
-			last_meep_id = private_chats_content[key][-1]['no']
-			self.protonet_server.set_last_seen_meep(privat_chat_id, subscription_id, last_meep_id)
+			try:
+				last_meep_id = private_chats_content[key][-1]['no']
+				self.protonet_server.set_last_seen_meep(privat_chat_id, subscription_id, last_meep_id)
+			except:
+				pass
 
 	def get_new_meeps(self):
 		private_chats = self.protonet_server.get_private_chats()
