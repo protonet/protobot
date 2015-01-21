@@ -19,7 +19,7 @@ Beispiel zur Verwendung:
 		Angegeben als Python-Dictionary:
 
 		answers = {}
-		answers['hallo'] = 'Hallo! Wie geht's'
+		answers['hallo'] = 'Hallo! Wie geht's?'
 		answers['tschüss'] = 'Auf Wiedersehen'
 
 
@@ -54,3 +54,64 @@ Beispiel zur Verwendung:
 
 Die API kann auch statt mit einem Passwort, auch mit einem Token verwendet werden.
 Dies ist jedoch in Version 1.2 noch nicht implementiert.
+
+
+
+
+
+
+
+
+The Protobot signs into the Protonet server with the stated username and password.
+It then answers messages with predefined answers or with return value of a function.
+
+Example of use:
+---------------
+
+	Use:
+	----
+		./protobot.py servername.protonet.info max.mustermann@musterserver.de ‘user_password’
+
+
+	Adjust the answers:
+	------------------------
+		WARNING: Messages will always be processed in lowercase!
+		Meaning the keys in the dictionary are required to be lowercase as well.
+
+		Assigned as Python-dictionary:
+
+		answers = {}
+		answers[‘hello’] = ‘Hello! How are you?’
+		answers[‘bye’] = ‘Goodbye’ 
+
+
+
+	Definition of the standard answers:
+	--------------------------------
+		default_message = ‘Unfortunately I did not understand that’ 
+
+
+
+	Execute the python function and send the return value as a function:
+	------------------------------------------------------------------
+		Should a function be executed then it is required to present it in a tuple, which is made out of functions and parameters.
+
+		answers = {}
+		answers[‘ifconfig’] = (os.popen, ‘ifconfig’)
+
+
+	Several functions can also be defined by yourself:
+	--------------------------------------------------
+		def ownFunction(parameter):
+			answer = parameter
+
+			# insert code here
+
+			return str(answer)
+
+		answers = {}
+		answers[‘do something’] = (ownFunction, ‘Don’t feel like it!’)
+
+
+The API can also be used if you substitute the password with a token.
+This is, however, not yet implemented in version 1.2
