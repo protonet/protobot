@@ -209,7 +209,7 @@ class ProtoBot(object):
 default_messages = 'Das habe ich leider nicht verstanden.'
 
 answers = {}
-answers['ip?'] = (os.popen, 'ifconfig')  # (python funktion, shell befehl)
+answers['ip?'] = (os.popen, 'ifconfig')  # (python funktion, parameter)
 answers['hallo'] = 'Guten Tag! :)'		 # normale Antwort
 answers['kaffee'] = 'Gibt`s nicht! :P'
 
